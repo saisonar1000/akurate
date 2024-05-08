@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - A Pen by sai Sonar</title>
+  
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AKURATE</title>
+    <style>
+        /* CSS styles */
+        body {
+            background-color: black;
+            color: white; /* Setting text color to white for better visibility */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+            position: relative; /* Added for positioning the forms */
+        }
+        h1 {
+            color: green; /* Changing heading color to green */
+        }
+        .start-button {
+            background-color: green;
+            color: black;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        .start-button:hover {
+            background-color: lightgreen;
+            transform: scale(1.1);
+        }
+        .market-buttons {
+            display: none;
+            margin-top: 20px;
+        }
+        .market-buttons button {
+            background-color: green;
+            color: black;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+        .market-buttons button:hover {
+            background-color: lightgreen;
+        }
+        /* Checkbox styling */
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+        }
+        .checkbox-label {
+            color: white;
+            margin-right: 5px;
+        }
+        .checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid white;
+            border-radius: 3px;
+            cursor: pointer;
+            position: relative;
+        }
+        .checkbox::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 5px;
+            height: 10px;
+            border-width: 2px 0 0 2px;
+            border-style: solid;
+            border-color: white;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        .checkbox.checked::before {
+            opacity: 1;
+        }
+        /* Hide checkbox when start button is clicked */
+        .start-button-clicked ~ .checkbox-container {
+            display: none;
+        }
+        /* Register/Login button */
+        .register-login-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: green;
+            color: black;
+            padding: 8px 16px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        .register-login-button:hover {
+            background-color: lightgreen;
+            transform: scale(1.1);
+        }
+        /* Registration form styling */
+        .registration-form, .login-form {
+            display: none;
+            position: absolute;
+            top: 60px;
+            right: 10px;
+            background-color: #333;
+            padding: 20px;
+            border-radius: 5px;
+            border: 1px solid #aaa;
+        }
+        .registration-form input, .login-form input {
+            padding: 8px;
+            margin: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .registration-form button, .login-form button, .close-button {
+            background-color: green;
+            color: black;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+        .registration-form button:hover, .login-form button:hover, .close-button:hover {
+            background-color: lightgreen;
+            transform: scale(1.1);
+        }
+        /* Privacy Policy button styling */
+        .privacy-policy-button {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            background-color: green;
+            color: black;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        .privacy-policy-button:hover {
+            background-color: lightgreen;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Register/Login button -->
+    <button class="register-login-button" onclick="toggleFormVisibility()">Register/Login</button>
+
+    <!-- Registration form -->
+    <div class="registration-form" id="registrationForm">
+        <button class="close-button" onclick="hideForm('registrationForm')">Close</button>
+        <h2>Registration Form</h2>
+        <input type="text" placeholder="Username">
+        <input type="email" placeholder="Email Address" id="regEmail"> <!-- Added ID for email input -->
+        <input type="password" placeholder="Password" id="regPassword"> <!-- Added ID for password input -->
+        <input type="password" placeholder="Confirm Password">
+        <button onclick="register()">Register</button>
+    </div>
+
+    <!-- Login form -->
+    <div class="login-form" id="loginForm">
+        <button class="close-button" onclick="hideForm('loginForm')">Close</button>
+        <h2>Login Form</h2>
+        <input type="email" placeholder="Email Address">
+        <input type="password" placeholder="Password">
+        <button onclick="login()">Login</button>
+    </div>
+
+    <div>
+        <h1>Welcome to AKURATE</h1>
+        <p>THE INTELLIGENT WAY TO TRADE. </p>
+        <button class="start-button" id="startButton" onclick="startFunction()">Start</button>
+    </div>
+
+    <div class="market-buttons" id="marketButtons">
+        <h2>TYPES OF MARKETS</h2>
+        <button onclick="navigateTo('forex')">FOREX TRADES</button>
+        <button onclick="navigateTo('stock')">STOCK MARKET</button>
+        <button onclick="navigateTo('CRYPTO')">CRYPTO CURRENCY</button>
+    </div>
+
+    <!-- Checkbox for privacy policy -->
+    <div class="checkbox-container">
+        <label for="privacyCheckbox" class="checkbox-label">I agree to the privacy policy</label>
+        <div class="checkbox" onclick="toggleCheckbox(this)"></div>
+    </div>
+
+    <!-- Privacy Policy button -->
+    <button class="privacy-policy-button" onclick="openPrivacyPolicy()">Privacy Policy</button>
+
+    <script>
+        // Variable to track whether privacy policy is checked
+        var privacyPolicyChecked = false;
+        // Variable to store registered email and password
+        var registeredEmail = "";
+        var registeredPassword = "";
+
+        function startFunction() {
+            if (!privacyPolicyChecked) {
+                alert("Please agree to the privacy policy.");
+                return;
+            }
+
+            // Prompt for registered email and password
+            var enteredEmail = prompt("Please enter your registered email address:");
+            if (enteredEmail === null || enteredEmail === "") {
+                alert("Email is required.");
+                return;
+            }
+
+            var enteredPassword = prompt("Please enter your registered password:");
+            if (enteredPassword === null || enteredPassword === "") {
+                alert("Password is required.");
+                return;
+            }
+
+            // Check if entered email and password match registered credentials
+            if (enteredEmail !== registeredEmail || enteredPassword !== registeredPassword) {
+                alert("Incorrect email or password.");
+                return;
+            }
+
+            alert("Starting AKURATE...");
+            document.getElementById("startButton").style.display = "none";
+            document.getElementById("marketButtons").style.display = "block";
+            document.getElementById("startButton").classList.add('start-button-clicked');
+            document.querySelector('.checkbox-container').style.display = 'none'; // Hide checkbox
+        }
+
+        function navigateTo(market) {
+            alert("Navigating to " + market.toUpperCase() + "...");
+            if (market === 'forex') {
+                window.open('https://forexakuratee.tiiny.site/');
+            } else if (market === 'stock') {
+                window.open('https://stockakuret.tiiny.site/');
+            } else if (market === 'CRYPTO') {
+                window.open('https://cryptocurrencyakurate.tiiny.site/');
+            }
+        }
+
+        // Function to toggle checkbox state
+        function toggleCheckbox(checkbox) {
+            checkbox.classList.toggle('checked');
+            privacyPolicyChecked = !privacyPolicyChecked;
+        }
+
+        // Function to toggle visibility of registration and login forms
+        function toggleFormVisibility() {
+            var registrationForm = document.getElementById("registrationForm");
+            var loginForm = document.getElementById("loginForm");
+
+            if (registrationForm.style.display === "none") {
+                registrationForm.style.display = "block";
+                loginForm.style.display = "none";
+            } else {
+                registrationForm.style.display = "none";
+                loginForm.style.display = "block";
+            }
+        }
+
+        // Function to hide a form
+        function hideForm(formId) {
+            var form = document.getElementById(formId);
+            form.style.display = "none";
+        }
+
+        function register() {
+            var emailInput = document.getElementById("regEmail");
+            var passwordInput = document.getElementById("regPassword");
+
+            // Validate email format using regular expression
+            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(emailInput.value)) {
+                alert("Please enter a valid email address.");
+                return;
+            }
+
+            // Store the registered email and password
+            registeredEmail = emailInput.value;
+            registeredPassword = passwordInput.value;
+            alert("Registration completed successfully!");
+            hideForm("registrationForm");
+        }
+
+        function login() {
+            // Add login logic here
+            alert("Login successful!");
+            hideForm("loginForm");
+        }
+
+        // Function to open privacy policy link
+        function openPrivacyPolicy() {
+            window.open('https://akurateeprivacypolicy.tiiny.site/');
+        }
+    </script>
+</body>
+</html>
+<!-- partial -->
+  
+</body>
+</html>
